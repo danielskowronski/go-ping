@@ -300,7 +300,7 @@ func (p *Pinger) run() {
 		case <-timeout.C:
 			close(p.done)
 			p.PacketsRecv = p.PacketsRecv+1 //no response = packet processed
-			wg.Wait()
+			//wg.Wait() //yeah, waiting for timeouted packet is good idea...
 			return
 		case <-interval.C:
 			err = p.sendICMP(conn)
@@ -315,7 +315,7 @@ func (p *Pinger) run() {
 		default:
 			if p.Count > 0 && p.PacketsRecv >= p.Count {
 				close(p.done)
-				wg.Wait()
+				//wg.Wait()
 				return
 			}
 		}
