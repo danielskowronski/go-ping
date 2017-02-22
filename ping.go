@@ -299,6 +299,7 @@ func (p *Pinger) run() {
 			return
 		case <-timeout.C:
 			close(p.done)
+			p.PacketsRecv = p.PacketsRecv+1 //no response = packet processed
 			wg.Wait()
 			return
 		case <-interval.C:
